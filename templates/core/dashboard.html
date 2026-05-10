@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block page_title %}Tableau de bord{% endblock %}
+{% block content %}
+<div class="row g-3 mb-4">
+  <div class="col-md-3"><div class="card card-kpi"><div class="card-body"><div class="text-muted">Articles</div><div class="display-6">{{ article_count }}</div></div></div></div>
+  <div class="col-md-3"><div class="card card-kpi"><div class="card-body"><div class="text-muted">Machines indisponibles</div><div class="display-6">{{ machine_down }}</div></div></div></div>
+  <div class="col-md-3"><div class="card card-kpi"><div class="card-body"><div class="text-muted">Tickets maintenance ouverts</div><div class="display-6">{{ open_maintenance }}</div></div></div></div>
+  <div class="col-md-3"><div class="card card-kpi"><div class="card-body"><div class="text-muted">OF ouverts</div><div class="display-6">{{ open_mo }}</div></div></div></div>
+</div>
+<div class="card card-kpi"><div class="card-body">
+  <h5>Articles en besoin net</h5>
+  <table class="table"><thead><tr><th>Article</th><th>Besoin net total</th><th>Premier lancement conseillé</th></tr></thead><tbody>
+    {% for row in shortage %}
+    <tr><td>{{ row.article.code }} - {{ row.article.designation }}</td><td>{{ row.net_total }}</td><td>{{ row.first_launch|date:'d/m/Y' }}</td></tr>
+    {% empty %}
+    <tr><td colspan="3">Aucun manque détecté.</td></tr>
+    {% endfor %}
+  </tbody></table>
+</div></div>
+{% endblock %}
